@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>{{country.name}}</h2>
+<mat-dialog-content class="mat-typography">
+  <ul>
+    <li *ngFor="let item of country | keyvalue">
+      <ng-container *ngIf="item.key !== 'regionalBlocs' && item.key !== 'flag' && item.value !== '' && item.value !== null && item.key !== 'name'">
+        <div class="boxData">
+          <div class="left_part">
+            <strong>{{item.key}}:</strong>
+          </div>
+          <div class="right_part">
+            <ng-container *ngIf="item.key === 'currencies' || item.key === 'languages'">
+              <ng-container *ngFor="let itemObj of item.value">
+                <div *ngFor="let item of itemObj | keyvalue">
+                  {{item.key}}: {{item.value}}
+                </div>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="item.key === 'translations'">
+              <div *ngFor="let item of item.value | keyvalue">
+                {{item.key}}: {{item.value}}
+              </div>
+            </ng-container>
+            <ng-container *ngIf="item.key !== 'currencies' && item.key !== 'languages' && item.key !== 'translations'">
+              {{item.value}}
+            </ng-container>
+          </div>
+        </div>
+      </ng-container>
+    </li>
+  </ul>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>
+
+

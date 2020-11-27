@@ -1,0 +1,60 @@
+mat-form-field {
+  width: 100%;
+}
+
+mat-table {
+  &.table-view {
+    background: #ccc;
+
+  }
+
+  &.block-view {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    box-shadow: none;
+    justify-content: space-between;
+    mat-header-row {
+      display: none;
+    }
+
+    mat-row {
+      flex-basis: 23%;
+      border: none;
+      display: flex;
+      margin-bottom: 30px;
+
+      &:last-of-type {
+        margin-left: 30px;
+        margin-right: auto;
+      }
+      &:first-of-type {
+        margin-left: 0;
+      }
+      img {
+        width: 70%;
+        margin-bottom: 15px;
+      }
+
+      .nameCountry {
+        padding: 15px 0;
+      }
+    }
+    mat-cell {
+      display: none;
+      padding: 0;
+      &.ico-cell {
+        display: flex;
+        border: 1px solid #ccc;
+        height: 100%;
+        flex-flow: column;
+        justify-content: flex-start;
+        transition: all ease 0.3s;
+        &:hover {
+          border: 1px solid #000;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

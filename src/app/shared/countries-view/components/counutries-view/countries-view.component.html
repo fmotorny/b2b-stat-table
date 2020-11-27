@@ -1,0 +1,84 @@
+<div class="buttons">
+  <button (click)="addClassToTable('table-view')" mat-button color="primary">To table</button>
+  <button (click)="addClassToTable('block-view')" mat-button color="primary">To blocks</button>
+</div>
+
+<mat-form-field>
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Searching by value">
+</mat-form-field>
+
+<mat-table [ngClass]="tableClass" matSort  [dataSource]="dataSource" class="mat-elevation-z8">
+
+
+  <!-- Ico Column -->
+  <ng-container matColumnDef="flag">
+    <mat-header-cell *matHeaderCellDef > <strong>Ico</strong> </mat-header-cell>
+    <mat-cell (click)="tableClass === 'block-view' ? callAdditionalInfo(element) : ''" class="ico-cell" *matCellDef="let element">
+      <div *ngIf="tableClass === 'block-view'" class="nameCountry">
+        {{element.name}}
+      </div>
+      <img width="30" src="{{element.flag}}" alt="">
+    </mat-cell>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> <strong>Name</strong> </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+  </ng-container>
+
+  <!-- alpha2Code Column -->
+  <ng-container matColumnDef="alpha2Code">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> <strong>alpha2Code</strong> </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.alpha2Code}} </mat-cell>
+  </ng-container>
+
+  <!-- alpha3Code Column -->
+  <ng-container matColumnDef="alpha3Code">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> <strong>alpha3Code</strong> </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.alpha3Code}} </mat-cell>
+  </ng-container>
+
+  <!-- area Column -->
+  <ng-container matColumnDef="area">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> <strong>area</strong> </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.area}} </mat-cell>
+  </ng-container>
+
+  <!-- altSpellings Column -->
+  <ng-container matColumnDef="altSpellings">
+    <mat-header-cell *matHeaderCellDef> <strong>altSpellings</strong> </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.altSpellings}} </mat-cell>
+  </ng-container>
+
+
+  <!-- altSpellings Column -->
+  <ng-container matColumnDef="currencies">
+    <mat-header-cell *matHeaderCellDef> <strong>currencies</strong> </mat-header-cell>
+    <mat-cell style="flex-flow: column; align-items: start;" *matCellDef="let element">
+      <div *ngFor="let currencyEl of element.currencies; let i = index">
+        {{i + 1}}
+        <div *ngFor="let item of currencyEl | keyvalue">
+          <strong>{{item.key}}</strong>: {{item.value}}
+        </div>
+      </div>
+    </mat-cell>
+  </ng-container>
+
+
+  <ng-container matColumnDef="buttons">
+    <mat-header-cell *matHeaderCellDef> <strong>buttons</strong> </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <button (click)="addCountryToList(element)">Add New Table</button>
+    </mat-cell>
+  </ng-container>
+
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row class="rowTest" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+
+</mat-table>
+
+<mat-paginator #paginator [pageSize]="10"></mat-paginator>
