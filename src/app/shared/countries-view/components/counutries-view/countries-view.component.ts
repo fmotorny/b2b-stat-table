@@ -1,24 +1,34 @@
-import {ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {CountriesService} from '../../../services/countries.service';
 import {MatDialog} from '@angular/material/dialog';
 import {DetailCountryDataComponent} from '../../../detail-country-data/components/detail-country-data/detail-country-data.component';
+import {FormControl} from '@angular/forms';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-countries-view',
   templateUrl: './countries-view.component.html',
-  styleUrls: ['./countries-view.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./countries-view.component.scss']
 })
-export class CountriesViewComponent implements OnInit, OnChanges {
+export class CountriesViewComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() isFavoriteList: boolean;
   @Input() countryObj: any;
-  displayedColumns: string[] = ['flag', 'name', 'alpha2Code', 'alpha3Code', 'altSpellings', 'area', 'currencies', 'buttons'];
+  isMaxInView = false;
+  // displayedColumns: string[] = ['flag', 'name', 'alpha2Code', 'alpha3Code', 'altSpellings', 'area', 'borders', 'callingCodes', 'capital', 'cioc', 'currencies', 'demonym', 'gini' ];
+
+  displayedColumns: string[] = ['flag', 'name', 'alpha2Code', 'alpha3Code', 'altSpellings', 'area', 'borders', 'callingCodes', 'capital', 'cioc', 'currencies', 'demonym', 'gini', 'languages', 'latlng', 'nativeName', 'numericCode', 'population', 'region', 'subregion', 'timezones', 'topLevelDomain', 'translations', 'buttons'];
+
   tableClass = 'table-view';
   dataSource: MatTableDataSource<any>;
+
+  columns: FormControl = new FormControl();
+  cloneColumnList = [];
+
+  subscription: Subscription;
 
 
 
@@ -38,7 +48,20 @@ export class CountriesViewComponent implements OnInit, OnChanges {
 
   constructor(private countriesService: CountriesService, public dialog: MatDialog) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isMaxInView = this.displayedColumns.length === 14 || this.displayedColumns.length > 14;
+    this.cloneColumnList = Object.assign([], this.displayedColumns);
+
+    this.subscription = this.columns.valueChanges.subscribe(value => {
+      const cloneList = Object.assign([], this.cloneColumnList);
+      this.displayedColumns = cloneList.filter( ( el ) => {
+        return value.indexOf( el ) < 0;
+      });
+      this.isMaxInView = this.displayedColumns.length === 14 || this.displayedColumns.length > 14;
+    });
+
+
+  }
 
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -62,8 +85,8 @@ export class CountriesViewComponent implements OnInit, OnChanges {
     }
   }
 
-  addClassToTable(classStr: string): void {
-    this.tableClass = classStr;
+  addClassToTable(viewValue: string): void {
+    this.tableClass = viewValue;
   }
 
   callAdditionalInfo(country: any): void {
@@ -73,8 +96,11 @@ export class CountriesViewComponent implements OnInit, OnChanges {
 
 
   addCountryToList(country: any): void {
-    console.log('addCountryToList', country);
     this.countriesService.insertCountry.next(country);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

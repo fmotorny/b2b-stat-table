@@ -4,7 +4,46 @@ mat-form-field {
 
 mat-table {
   &.table-view {
-    background: #ccc;
+
+    box-shadow: none;
+    border-radius: 6px;
+    overflow: hidden;
+    .mat-column-flag, .ico-cell {
+      display: none;
+    }
+
+    mat-header-cell {
+      background: #e4e4e4;
+      padding: 0 10px;
+      border-right: 1px solid #ccc;
+      &:nth-child(2) {
+        padding-left: 30px;
+      }
+      &:last-of-type {
+        padding-right: 30px;
+      }
+    }
+    mat-cell {
+      padding: 0 10px;
+      border-right: 1px solid #ccc;
+      word-break: break-word;
+      &:nth-child(2) {
+        padding-left: 30px;
+      }
+      &:last-of-type {
+        padding-right: 30px;
+        border-right: none;
+      }
+    }
+
+    mat-row {
+      padding: 10px 0;
+      align-items: normal;
+      &:nth-child(odd) {
+        background: rgb(251 251 251 / 58%);
+      }
+    }
+
 
   }
 
@@ -57,4 +96,33 @@ mat-table {
       }
     }
   }
+
+
+  &.transformed {
+    width: 100%;
+    overflow-x: scroll;
+    mat-row, mat-header-row {
+      width: 3377px;
+      //display: block;
+      //&:nth-child(odd) {
+      //  background: rgb(251 251 251 / 58%);
+      //}
+    }
+  }
+}
+
+.tools {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 0 10px;
+}
+
+.buttons {
+  padding-top: 4px;
+  margin-left: 30px;
+}
+
+.selectColumn {
+  margin: 0 0 0 30px;
 }

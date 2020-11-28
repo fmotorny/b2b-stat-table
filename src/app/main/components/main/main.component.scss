@@ -1,6 +1,12 @@
 :host {
   display: block;
-  padding: 15px;
+  padding: 30px;
+}
+
+:host::ng-deep {
+  mat-tab-header {
+    border: none;
+  }
 }
 
 
