@@ -13,3 +13,10 @@ ul {
 .right_part {
   padding-left: 10px;
 }
+
+
+@media all and (max-width: 414px) {
+  .right_part {
+    word-break: break-word;
+  }
+}

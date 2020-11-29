@@ -1,6 +1,4 @@
 <div class="tools">
-
-
   <mat-form-field appearance="outline">
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Searching by value">
@@ -15,6 +13,21 @@
     </mat-select>
   </mat-form-field>
 
+
+<!--  <mat-form-field class="selectColumn" appearance="outline">-->
+<!--    <mat-label>Countries</mat-label>-->
+<!--    <mat-select #select *ngIf="isFavoriteList" [formControl]="countries" multiple>-->
+<!--      <ng-container *ngFor="let country of this.dataSource.data">-->
+<!--          <mat-option [value]="country">{{country.name}}</mat-option>-->
+<!--      </ng-container>-->
+<!--    </mat-select>-->
+<!--    <mat-select *ngIf="!isFavoriteList" [formControl]="countries" multiple>-->
+<!--      <ng-container *ngFor="let country of this.dataSource.data">-->
+<!--        <mat-option [value]="country">{{country.name}}</mat-option>-->
+<!--      </ng-container>-->
+<!--    </mat-select>-->
+<!--  </mat-form-field>-->
+
   <div class="buttons">
     <mat-button-toggle-group (change)="addClassToTable(group.value)" #group="matButtonToggleGroup">
       <mat-button-toggle [checked]="true" value="table-view">
@@ -28,7 +41,7 @@
 </div>
 
 
-<mat-table [class.transformed]="isMaxInView" [ngClass]="tableClass" matSort  [dataSource]="dataSource" class="mat-elevation-z8">
+<mat-table [class.transformed]="isMaxInView && tableClass === 'table-view'" [ngClass]="tableClass" matSort  [dataSource]="dataSource" class="mat-elevation-z8">
 
 
   <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
@@ -64,78 +77,17 @@
       </ng-container>
 
       <ng-container *ngIf="column === 'buttons'">
-        <button style="line-height: 19px;
+        <button *ngIf="!isFavoriteList" style="line-height: 19px;
     padding: 5px 20px;" (click)="addCountryToList(element)" mat-flat-button color="primary">Add to <br> Favorite list</button>
+
+        <button *ngIf="isFavoriteList" style="line-height: 19px;
+    padding: 5px 20px;" (click)="removeCountryFromList(element.name)"  mat-flat-button color="primary">Remove</button>
       </ng-container>
     </mat-cell>
   </ng-container>
 
-<!--  &lt;!&ndash; Ico Column &ndash;&gt;-->
-<!--  <ng-container matColumnDef="flag">-->
-<!--    <mat-header-cell *matHeaderCellDef > <strong>Ico</strong> </mat-header-cell>-->
-<!--    <mat-cell (click)="tableClass === 'block-view' ? callAdditionalInfo(element) : ''" class="ico-cell" *matCellDef="let element">-->
-<!--      <div *ngIf="tableClass === 'block-view'" class="nameCountry">-->
-<!--        {{element.name}}-->
-<!--      </div>-->
-<!--      <img width="30" src="{{element.flag}}" alt="">-->
-<!--    </mat-cell>-->
-<!--  </ng-container>-->
-
-<!--  &lt;!&ndash; Name Column &ndash;&gt;-->
-<!--  <ng-container matColumnDef="name">-->
-<!--    <mat-header-cell *matHeaderCellDef mat-sort-header> <strong>Name</strong> </mat-header-cell>-->
-<!--    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>-->
-<!--  </ng-container>-->
-
-<!--  &lt;!&ndash; alpha2Code Column &ndash;&gt;-->
-<!--  <ng-container matColumnDef="alpha2Code">-->
-<!--    <mat-header-cell *matHeaderCellDef mat-sort-header> <strong>alpha2Code</strong> </mat-header-cell>-->
-<!--    <mat-cell *matCellDef="let element"> {{element.alpha2Code}} </mat-cell>-->
-<!--  </ng-container>-->
-
-<!--  &lt;!&ndash; alpha3Code Column &ndash;&gt;-->
-<!--  <ng-container matColumnDef="alpha3Code">-->
-<!--    <mat-header-cell *matHeaderCellDef mat-sort-header> <strong>alpha3Code</strong> </mat-header-cell>-->
-<!--    <mat-cell *matCellDef="let element"> {{element.alpha3Code}} </mat-cell>-->
-<!--  </ng-container>-->
-
-<!--  &lt;!&ndash; area Column &ndash;&gt;-->
-<!--  <ng-container matColumnDef="area">-->
-<!--    <mat-header-cell *matHeaderCellDef mat-sort-header> <strong>area</strong> </mat-header-cell>-->
-<!--    <mat-cell *matCellDef="let element"> {{element.area}} </mat-cell>-->
-<!--  </ng-container>-->
-
-<!--  &lt;!&ndash; altSpellings Column &ndash;&gt;-->
-<!--  <ng-container matColumnDef="altSpellings">-->
-<!--    <mat-header-cell *matHeaderCellDef> <strong>altSpellings</strong> </mat-header-cell>-->
-<!--    <mat-cell *matCellDef="let element"> {{element.altSpellings}} </mat-cell>-->
-<!--  </ng-container>-->
-
-
-<!--  &lt;!&ndash; altSpellings Column &ndash;&gt;-->
-<!--  <ng-container matColumnDef="currencies">-->
-<!--    <mat-header-cell *matHeaderCellDef> <strong>currencies</strong> </mat-header-cell>-->
-<!--    <mat-cell style="flex-flow: column; align-items: start;" *matCellDef="let element">-->
-<!--      <div *ngFor="let currencyEl of element.currencies; let i = index">-->
-<!--        {{i + 1}}-->
-<!--        <div *ngFor="let item of currencyEl | keyvalue">-->
-<!--          <strong>{{item.key}}</strong>: {{item.value}}-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </mat-cell>-->
-<!--  </ng-container>-->
-
-
-<!--  <ng-container matColumnDef="buttons">-->
-<!--    <mat-header-cell *matHeaderCellDef> <strong>buttons</strong> </mat-header-cell>-->
-<!--    <mat-cell *matCellDef="let element">-->
-<!--      <button (click)="addCountryToList(element)">Add New Table</button>-->
-<!--    </mat-cell>-->
-<!--  </ng-container>-->
-
-
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row class="rowTest" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  <mat-header-row [ngStyle]="{'width': isMaxInView &&  tableClass === 'table-view'? baseWidth + '%' : '100%' }" *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row class="rowTest" [ngStyle]="{'width': isMaxInView && tableClass === 'table-view' ? baseWidth + '%' : '100%' }" *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
 
 </mat-table>

@@ -44,15 +44,22 @@ mat-table {
       }
     }
 
+    mat-row, mat-header-row {
+      width: 100%;
+    }
+
 
   }
 
   &.block-view {
-    display: flex;
     width: 100%;
-    flex-wrap: wrap;
+    flex-flow: row wrap;
     box-shadow: none;
+    display: grid;
+    grid-template-columns: repeat(4, 23.7%);
+    grid-gap: 30px;
     justify-content: space-between;
+
     mat-header-row {
       display: none;
     }
@@ -61,14 +68,15 @@ mat-table {
       flex-basis: 23%;
       border: none;
       display: flex;
-      margin-bottom: 30px;
+    //  margin-bottom: 30px;
+     // margin: 0 1% 30px;
 
       &:last-of-type {
-        margin-left: 30px;
-        margin-right: auto;
+        //margin-left: 30px;
+        //margin-right: auto;
       }
       &:first-of-type {
-        margin-left: 0;
+        //margin-left: 0;
       }
       img {
         width: 70%;
@@ -84,7 +92,8 @@ mat-table {
       padding: 0;
       &.ico-cell {
         display: flex;
-        border: 1px solid #ccc;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
         height: 100%;
         flex-flow: column;
         justify-content: flex-start;
@@ -102,7 +111,7 @@ mat-table {
     width: 100%;
     overflow-x: scroll;
     mat-row, mat-header-row {
-      width: 3377px;
+      //width: 3377px;
       //display: block;
       //&:nth-child(odd) {
       //  background: rgb(251 251 251 / 58%);
@@ -125,4 +134,58 @@ mat-table {
 
 .selectColumn {
   margin: 0 0 0 30px;
+}
+
+
+@media all and (max-width: 1919px) {
+  mat-table {
+    &.block-view {
+      grid-template-columns: repeat(4, 22.5%);
+    }
+  }
+}
+@media all and (max-width: 991px) {
+  mat-table {
+    &.block-view {
+      display: flex;
+      mat-row {
+        flex-basis: 47%;
+      }
+    }
+
+  }
+
+}
+@media all and (max-width: 768px) {
+  .tools {
+    flex-flow: column;
+  }
+  .selectColumn {
+    margin: 0;
+  }
+  .buttons {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+  }
+
+  mat-table {
+    &.transformed {
+
+      mat-row, mat-header-row {
+        width: 3377px !important;
+
+      }
+    }
+  }
+}
+@media all and (max-width: 575px) {
+  mat-table {
+    &.block-view {
+      mat-row {
+        flex-basis: 100%;
+      }
+    }
+  }
 }

@@ -10,4 +10,35 @@
 }
 
 
+@media all and (max-width: 575px) {
+  :host::ng-deep {
+    mat-tab-header {
+      .mat-tab-labels {
+        .mat-tab-label-content {
+          display: none;
+
+        }
+        .mat-tab-label {
+          &:nth-child(1) {
+            &:after {
+              content: 'Main';
+            }
+          }
+
+          &:nth-child(2) {
+            &:after {
+              content: 'Favorite';
+            }
+          }
+        }
+
+
+      }
+
+
+    }
+  }
+}
+
+
 

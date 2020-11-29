@@ -7,6 +7,9 @@ import {MatDialog} from '@angular/material/dialog';
 import {DetailCountryDataComponent} from '../../../detail-country-data/components/detail-country-data/detail-country-data.component';
 import {FormControl} from '@angular/forms';
 import {Subscription} from 'rxjs';
+import {CountryInterface} from '../../../types/country.interface';
+import {MatOption} from '@angular/material/core';
+import {MatSelect} from '@angular/material/select';
 
 @Component({
   selector: 'app-countries-view',
@@ -16,28 +19,33 @@ import {Subscription} from 'rxjs';
 export class CountriesViewComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() isFavoriteList: boolean;
-  @Input() countryObj: any;
+  @Input() countryObj: CountryInterface;
   isMaxInView = false;
-  // displayedColumns: string[] = ['flag', 'name', 'alpha2Code', 'alpha3Code', 'altSpellings', 'area', 'borders', 'callingCodes', 'capital', 'cioc', 'currencies', 'demonym', 'gini' ];
 
-  displayedColumns: string[] = ['flag', 'name', 'alpha2Code', 'alpha3Code', 'altSpellings', 'area', 'borders', 'callingCodes', 'capital', 'cioc', 'currencies', 'demonym', 'gini', 'languages', 'latlng', 'nativeName', 'numericCode', 'population', 'region', 'subregion', 'timezones', 'topLevelDomain', 'translations', 'buttons'];
+  displayedColumns: string[] = ['flag', 'buttons', 'name', 'alpha2Code', 'alpha3Code', 'altSpellings', 'area', 'borders', 'callingCodes', 'capital', 'cioc', 'currencies', 'demonym', 'gini', 'languages', 'latlng', 'nativeName', 'numericCode', 'population', 'region', 'subregion', 'timezones', 'topLevelDomain', 'translations'];
 
   tableClass = 'table-view';
-  dataSource: MatTableDataSource<any>;
+  dataSource: MatTableDataSource<CountryInterface>;
 
   columns: FormControl = new FormControl();
+  countries: FormControl = new FormControl();
   cloneColumnList = [];
 
   subscription: Subscription;
+  baseWidth: number;
+
+
+
 
 
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('select') select: MatSelect;
 
 
-  @Input() set data(value: any) {
+  @Input() set data(value: CountryInterface[]) {
     this.dataSource = new MatTableDataSource(value);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -52,13 +60,32 @@ export class CountriesViewComponent implements OnInit, OnChanges, OnDestroy {
     this.isMaxInView = this.displayedColumns.length === 14 || this.displayedColumns.length > 14;
     this.cloneColumnList = Object.assign([], this.displayedColumns);
 
-    this.subscription = this.columns.valueChanges.subscribe(value => {
+    this.subscription = this.columns.valueChanges.subscribe((value: Array<string>) => {
       const cloneList = Object.assign([], this.cloneColumnList);
       this.displayedColumns = cloneList.filter( ( el ) => {
         return value.indexOf( el ) < 0;
       });
       this.isMaxInView = this.displayedColumns.length === 14 || this.displayedColumns.length > 14;
+      this.baseWidth = this.displayedColumns.length * 10;
     });
+    this.baseWidth = this.displayedColumns.length * 10;
+
+
+
+    //
+    //
+    //
+    // this.subscription = this.countries.valueChanges.subscribe(value => {
+    //   const cloneList = Object.assign([], value);
+    //   // console.log('cloneList', cloneList);
+    //
+    //   console.log('select value', value);
+    //
+    //
+    //   this.dataSource.data = cloneList;
+    //
+    //   console.log('this.dataSource.data', this.dataSource.data);
+    // });
 
 
   }
@@ -72,6 +99,10 @@ export class CountriesViewComponent implements OnInit, OnChanges, OnDestroy {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }
+
+    // if (this.select && this.select.options.length > 0) {
+    //   this.select.options.forEach( (item: MatOption) => item.select());
+    // }
   }
 
 
@@ -89,14 +120,16 @@ export class CountriesViewComponent implements OnInit, OnChanges, OnDestroy {
     this.tableClass = viewValue;
   }
 
-  callAdditionalInfo(country: any): void {
+  callAdditionalInfo(country: CountryInterface): void {
     const dialogRef = this.dialog.open(DetailCountryDataComponent, {data: country});
   }
 
-
-
-  addCountryToList(country: any): void {
+  addCountryToList(country: CountryInterface): void {
     this.countriesService.insertCountry.next(country);
+  }
+
+  removeCountryFromList(countryName: string): void {
+    this.countriesService.removeCountry.next({name: countryName} as CountryInterface);
   }
 
   ngOnDestroy(): void {

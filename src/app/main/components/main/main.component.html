@@ -2,9 +2,11 @@
   <mat-tab label="Main country list">
     <app-countries-view [isFavoriteList]="false" [data]="dataSource"></app-countries-view>
   </mat-tab>
-  <mat-tab *ngIf="countryObj !== null || favoriteList.length > 0" label="Favorite country list">
-    <app-countries-view  [isFavoriteList]="true" [countryObj]="countryObj" [data]="favoriteList"></app-countries-view>
-  </mat-tab>
+  <ng-container *ngIf="isShowTab">
+    <mat-tab  *ngIf="countryObj !== null || favoriteList.length > 0" label="Favorite country list">
+      <app-countries-view  [isFavoriteList]="true" [countryObj]="countryObj" [data]="favoriteList"></app-countries-view>
+    </mat-tab>
+  </ng-container>
 </mat-tab-group>
 
 
