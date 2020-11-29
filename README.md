@@ -1,4 +1,5 @@
 # B2bStatTable
+Demo link (https://fmotorny.github.io/b2b-stat-table/)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.2.
 
