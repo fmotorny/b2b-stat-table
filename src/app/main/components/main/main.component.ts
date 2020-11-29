@@ -1,7 +1,8 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {CountriesService} from '../../../shared/services/countries.service';
 import {Subscription} from 'rxjs';
 import {CountryInterface} from '../../../shared/types/country.interface';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 
 @Component({
@@ -15,18 +16,20 @@ export class MainComponent implements OnInit, OnDestroy {
   dataSource: CountryInterface[];
   favoriteList: CountryInterface[] = [];
   countryObj: CountryInterface = null;
-
   subscription: Subscription;
-
-
-
   isShowTab = true;
 
 
+  @ViewChild('dialogTemplate') infoDialog: TemplateRef<MatDialog>;
 
-  constructor(private countriesService: CountriesService) { }
+
+
+  constructor(private countriesService: CountriesService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
+
+
+
     this.countriesService.getCountries().subscribe(((data: CountryInterface[]) => {
       this.dataSource = data;
     }));
@@ -34,9 +37,14 @@ export class MainComponent implements OnInit, OnDestroy {
 
     this.subscription = this.countriesService.insertCountry.subscribe((country: CountryInterface) => {
 
+
+
       this.isShowTab = true;
       const found = this.favoriteList.some(el => el.name === country.name);
-      if (found) return;
+      if (found) {
+        this.dialog.open(this.infoDialog);
+        return;
+      }
 
       this.favoriteList.push(country);
       this.countryObj = country;

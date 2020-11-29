@@ -13,11 +13,13 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { ToolsComponent } from './components/tools/tools.component';
 
 
 
 @NgModule({
-  declarations: [CountriesViewComponent],
+  declarations: [CountriesViewComponent, ToolsComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -30,8 +32,9 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatSelectModule,
     MatIconModule,
     MatButtonToggleModule,
+    MatTooltipModule,
     DetailCountryDataModule
   ],
-  exports: [CountriesViewComponent]
+  exports: [CountriesViewComponent, ToolsComponent]
 })
 export class CountriesViewModule { }

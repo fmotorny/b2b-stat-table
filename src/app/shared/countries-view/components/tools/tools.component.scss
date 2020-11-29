@@ -1,0 +1,36 @@
+.tools {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 26px 0 15px;
+}
+
+.buttons {
+  padding-top: 4px;
+  margin-left: 30px;
+}
+
+.selectColumn {
+  margin: 0 0 0 30px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+
+@media all and (max-width: 768px) {
+  .tools {
+    flex-flow: column;
+  }
+  .selectColumn {
+    margin: 0;
+  }
+  .buttons {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+  }
+
+}

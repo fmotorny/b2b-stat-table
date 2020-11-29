@@ -21,13 +21,13 @@
         .mat-tab-label {
           &:nth-child(1) {
             &:after {
-              content: 'Main';
+              content: 'MAIN';
             }
           }
 
           &:nth-child(2) {
             &:after {
-              content: 'Favorite';
+              content: 'FAVORITE';
             }
           }
         }

@@ -1,13 +1,20 @@
 <mat-tab-group animationDuration="0ms" mat-align-tabs="center" (selectedTabChange)="tabChanged($event)">
-  <mat-tab label="Main country list">
+  <mat-tab label="MAIN COUNTRY LIST">
     <app-countries-view [isFavoriteList]="false" [data]="dataSource"></app-countries-view>
   </mat-tab>
   <ng-container *ngIf="isShowTab">
-    <mat-tab  *ngIf="countryObj !== null || favoriteList.length > 0" label="Favorite country list">
+    <mat-tab  *ngIf="countryObj !== null || favoriteList.length > 0" label="FAVORITE COUNTRY LIST">
       <app-countries-view  [isFavoriteList]="true" [countryObj]="countryObj" [data]="favoriteList"></app-countries-view>
     </mat-tab>
   </ng-container>
 </mat-tab-group>
+
+
+<ng-template #dialogTemplate>
+  <mat-dialog-content class="mat-typography">
+    The Country exists in Favorites List
+  </mat-dialog-content>
+</ng-template>
 
 
 

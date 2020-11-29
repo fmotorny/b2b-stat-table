@@ -3,6 +3,11 @@ mat-form-field {
 }
 
 mat-table {
+  mat-icon {
+    font-size: 30px;
+    cursor: pointer;
+  }
+
   &.table-view {
 
     box-shadow: none;
@@ -48,6 +53,10 @@ mat-table {
       width: 100%;
     }
 
+    .batCellButtons {
+      flex: 0.2;
+    }
+
 
   }
 
@@ -60,6 +69,8 @@ mat-table {
     grid-gap: 30px;
     justify-content: space-between;
 
+
+
     mat-header-row {
       display: none;
     }
@@ -68,7 +79,7 @@ mat-table {
       flex-basis: 23%;
       border: none;
       display: flex;
-    //  margin-bottom: 30px;
+      margin-bottom: 20px;
      // margin: 0 1% 30px;
 
       &:last-of-type {
@@ -81,6 +92,9 @@ mat-table {
       img {
         width: 70%;
         margin-bottom: 15px;
+      }
+      button {
+        margin-top: auto;
       }
 
       .nameCountry {
@@ -98,6 +112,7 @@ mat-table {
         flex-flow: column;
         justify-content: flex-start;
         transition: all ease 0.3s;
+        padding-bottom: 15px;
         &:hover {
           border: 1px solid #000;
           cursor: pointer;
@@ -110,31 +125,16 @@ mat-table {
   &.transformed {
     width: 100%;
     overflow-x: scroll;
-    mat-row, mat-header-row {
-      //width: 3377px;
-      //display: block;
-      //&:nth-child(odd) {
-      //  background: rgb(251 251 251 / 58%);
-      //}
-    }
   }
 }
 
-.tools {
-  display: flex;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 28px 0 10px;
+
+
+::ng-deep .mat-tooltip {
+  font-size: 15px;
 }
 
-.buttons {
-  padding-top: 4px;
-  margin-left: 30px;
-}
 
-.selectColumn {
-  margin: 0 0 0 30px;
-}
 
 
 @media all and (max-width: 1919px) {
@@ -157,19 +157,6 @@ mat-table {
 
 }
 @media all and (max-width: 768px) {
-  .tools {
-    flex-flow: column;
-  }
-  .selectColumn {
-    margin: 0;
-  }
-  .buttons {
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    padding-bottom: 20px;
-  }
-
   mat-table {
     &.transformed {
 

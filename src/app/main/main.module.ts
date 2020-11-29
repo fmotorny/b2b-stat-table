@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MainComponent } from './components/main/main.component';
 import {CountriesViewModule} from '../shared/countries-view/countries-view.module';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 
@@ -11,7 +12,8 @@ import {MatTabsModule} from '@angular/material/tabs';
   imports: [
     CommonModule,
     MatTabsModule,
-    CountriesViewModule
+    CountriesViewModule,
+    MatDialogModule
   ]
 })
 export class MainModule { }
