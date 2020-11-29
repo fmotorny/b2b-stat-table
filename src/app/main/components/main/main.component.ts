@@ -27,18 +27,11 @@ export class MainComponent implements OnInit, OnDestroy {
   constructor(private countriesService: CountriesService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-
-
-
     this.countriesService.getCountries().subscribe(((data: CountryInterface[]) => {
       this.dataSource = data;
     }));
 
-
     this.subscription = this.countriesService.insertCountry.subscribe((country: CountryInterface) => {
-
-
-
       this.isShowTab = true;
       const found = this.favoriteList.some(el => el.name === country.name);
       if (found) {
