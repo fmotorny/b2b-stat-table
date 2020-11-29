@@ -35,14 +35,22 @@ export class MainComponent implements OnInit, OnDestroy {
       this.isShowTab = true;
       const found = this.favoriteList.some(el => el.name === country.name);
       if (found) {
-        this.dialog.open(this.infoDialog);
+        const dialogRef = this.dialog.open(this.infoDialog);
+        this.subscription = dialogRef.afterClosed().subscribe(result => {
+          this.countriesService.isOverflown = true;
+        });
         return;
       }
 
       this.favoriteList.push(country);
+
       this.countryObj = country;
       const favoriteList = JSON.stringify(this.favoriteList);
       localStorage.setItem('favorite-country-list', favoriteList);
+
+      setTimeout(() => {
+        this.countriesService.isOverflown = true;
+      }, 100);
     });
 
 
@@ -70,6 +78,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   tabChanged(event: Event): void {
     this.countryObj = {} as CountryInterface;
+    this.countriesService.isOverflown = true;
   }
 
   ngOnDestroy(): void {

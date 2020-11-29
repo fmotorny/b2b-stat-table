@@ -43,7 +43,8 @@ export class CountriesViewComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private countriesService: CountriesService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.isOverflown = true;
+  //  this.isOverflown = true;
+    this.countriesService.isOverflown = true;
     this.isMaxInView = this.displayedColumns.length === 14 || this.displayedColumns.length > 14;
     this.baseWidth = this.displayedColumns.length * 10;
   }
@@ -55,6 +56,7 @@ export class CountriesViewComponent implements OnInit, OnChanges, OnDestroy {
       this.dataSource.data.concat([changes.countryObj.currentValue]);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+
     }
   }
 
@@ -65,7 +67,8 @@ export class CountriesViewComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   addCountryToList(country: CountryInterface): void {
-    this.isOverflown = false;
+    this.countriesService.isOverflown = false;
+   // this.isOverflown = false;
     this.countriesService.insertCountry.next(country);
   }
 
@@ -93,6 +96,7 @@ export class CountriesViewComponent implements OnInit, OnChanges, OnDestroy {
 
   changeView(event: string): void {
     this.tableClass = event;
+    this.countriesService.isOverflown = true;
   }
 
 }

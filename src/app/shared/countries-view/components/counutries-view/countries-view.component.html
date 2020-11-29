@@ -19,12 +19,15 @@
 
     <ng-container *ngIf="column === 'add'">
       <mat-header-cell [class.batCellButtons]="column === 'add'" *matHeaderCellDef>
-        <strong>{{column}}</strong>
+        <strong *ngIf="isFavoriteList">remove</strong>
+        <strong *ngIf="!isFavoriteList">add</strong>
+
+
       </mat-header-cell>
     </ng-container>
 
 
-    <mat-cell (click)="tableClass === 'block-view' && isOverflown ? callAdditionalInfo(element) : ''" [class.batCellButtons]="column === 'add'" [class.ico-cell]="column === 'flag'" *matCellDef="let element;">
+    <mat-cell (click)="tableClass === 'block-view' && countriesService.isOverflown ? callAdditionalInfo(element) : ''" [class.batCellButtons]="column === 'add'" [class.ico-cell]="column === 'flag'" *matCellDef="let element;">
       <ng-container *ngIf="column === 'flag'">
           <div *ngIf="tableClass === 'block-view'" class="nameCountry">
             {{element.name}}

@@ -11,6 +11,7 @@ import {CountryInterface} from '../types/country.interface';
 export class CountriesService {
   insertCountry: Subject<CountryInterface> = new Subject();
   removeCountry: Subject<CountryInterface> = new Subject();
+  isOverflown = false;
   constructor(private http: HttpClient) { }
 
 
