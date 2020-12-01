@@ -43,8 +43,6 @@ export class CountriesViewComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private countriesService: CountriesService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-  //  this.isOverflown = true;
-    this.countriesService.isOverflown = true;
     this.isMaxInView = this.displayedColumns.length === 14 || this.displayedColumns.length > 14;
     this.baseWidth = this.displayedColumns.length * 10;
   }

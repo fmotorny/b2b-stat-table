@@ -50,7 +50,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
       setTimeout(() => {
         this.countriesService.isOverflown = true;
-      }, 100);
+      }, 300);
     });
 
 
