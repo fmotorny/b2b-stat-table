@@ -27,6 +27,9 @@
     </ng-container>
 
 
+!!!!
+
+
     <mat-cell (click)="tableClass === 'block-view' && countriesService.isOverflown ? callAdditionalInfo(element) : ''" [class.batCellButtons]="column === 'add'" [class.ico-cell]="column === 'flag'" *matCellDef="let element;">
       <ng-container *ngIf="column === 'flag'">
           <div *ngIf="tableClass === 'block-view'" class="nameCountry">
